@@ -1,0 +1,26 @@
+#spring.jpa.hibernate.ddl-auto=none
+#logging.level.org.springframework.jdbc.datasource.init.ScriptUtils=debug
+server:
+  ssl:
+    key-store: classpath:keystore.jks
+    key-store-password: g@m30FL1f3
+    key-store-type: JKS
+    key-alias: gol
+    key-password: g@m30FL1f3
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+logging:
+  level:
+    org.springframework.jdbc.datasource.init.ScriptUtils: debug
+---
+server:
+  port: 8000
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+server:
+  port: 9000

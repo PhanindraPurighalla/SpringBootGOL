@@ -23,8 +23,8 @@ public class PlayerTurnWebController {
 
     @GetMapping
     public String getNextCell(@RequestBody PlayerTurn playerTurn, Model model) {
-        var nextCell = this.playerTurnService.getNextCell(playerTurn);
-        model.addAttribute("nextCell", nextCell);
-        return "playerTurnDetails";
+        var traversedCells = this.playerTurnService.getTraversedCells(playerTurn);
+        model.addAttribute("traversedCells", traversedCells);
+        return "/playerTurnDetails";
     }
 }
