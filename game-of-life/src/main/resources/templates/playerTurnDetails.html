@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Player's turn details</title>
+</head>
+<body>
+<h1>Player's turn details</h1>
+<table>
+    <tr>
+        <td>Player Name</td>
+        <td>Career</td>
+        <td>Previous cell id</td>
+        <td>Next cell id</td>
+    </tr>
+    <tr th:each="nextCell: ${nextCell}">
+        <td th:text="${nextCell.cellActionId}">Cell Action Id</td>
+        <td th:text="${nextCell.nextCellId}">Next Cell Id - Regular flow</td>
+        <td th:text="${nextCell.altNextCellId}">Alternate Next Cell Id</td>
+    </tr>
+</table>
+</body>
+</html>
