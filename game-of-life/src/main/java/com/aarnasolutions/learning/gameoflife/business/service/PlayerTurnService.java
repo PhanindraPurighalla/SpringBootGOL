@@ -2,7 +2,6 @@ package com.aarnasolutions.learning.gameoflife.business.service;
 
 import com.aarnasolutions.learning.gameoflife.business.domain.PlayerTurn;
 import com.aarnasolutions.learning.gameoflife.business.domain.TraversedCell;
-import com.aarnasolutions.learning.gameoflife.data.entity.Cell;
 import com.aarnasolutions.learning.gameoflife.data.repository.ActionRepository;
 import com.aarnasolutions.learning.gameoflife.data.repository.CellRepository;
 import org.springframework.stereotype.Service;

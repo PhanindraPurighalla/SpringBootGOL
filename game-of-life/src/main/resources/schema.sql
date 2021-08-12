@@ -22,3 +22,15 @@ create table career
  career_salary              number          not null,
  career_max_salary          number          not null,
  career_taxes_due           number          not null);
+
+create table player
+(player_id                  INT AUTO_INCREMENT  PRIMARY KEY,
+ player_name                varchar2(20)    not null,
+ career_id                  number          null,
+ cash                       number          null,
+ bank_loan                  number          null,
+ number_spun                number          null);
+
+create table game
+(game_id                    varchar2(100)   not null,
+ player_id                  number          not null);
