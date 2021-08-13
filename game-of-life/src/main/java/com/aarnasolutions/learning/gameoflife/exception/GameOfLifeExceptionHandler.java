@@ -25,4 +25,12 @@ public class GameOfLifeExceptionHandler {
         gameOfLifeExceptionResponse.setErrorTime(ZonedDateTime.now());
         return new ResponseEntity<>(gameOfLifeExceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = CellIdDoesNotExistException.class)
+    public ResponseEntity<Object> exception(CellIdDoesNotExistException exception) {
+        GameOfLifeExceptionResponse gameOfLifeExceptionResponse = new GameOfLifeExceptionResponse();
+        gameOfLifeExceptionResponse.setErrorMessage("Cell Id " + exception.getCellId() + " not found");
+        gameOfLifeExceptionResponse.setErrorTime(ZonedDateTime.now());
+        return new ResponseEntity<>(gameOfLifeExceptionResponse, HttpStatus.NOT_FOUND);
+    }
 }

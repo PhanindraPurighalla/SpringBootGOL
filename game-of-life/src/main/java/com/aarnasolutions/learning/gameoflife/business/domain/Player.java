@@ -13,6 +13,7 @@ public class Player {
     private Career career;
     private long cash;
     private long bankLoan;
-    private long numberSpun;
+    private int numberSpun;
     private int numPlayers;
+    private long cellPosition;
 }

@@ -29,7 +29,8 @@ create table player
  career_id                  number          null,
  cash                       number          null,
  bank_loan                  number          null,
- number_spun                number          null);
+ number_spun                number          null,
+ cell_position              number          null);
 
 create table game
 (game_id                    varchar2(100)   not null,

@@ -20,6 +20,9 @@ public class Player {
     @Column(name="PLAYER_NAME")
     private String playerName;
 
+    @Column(name="CELL_POSITION")
+    private long cellPosition;
+
     @Column(name="CAREER_ID")
     private long careerId;
 
@@ -30,6 +33,6 @@ public class Player {
     private long bankLoan;
 
     @Column(name="NUMBER_SPUN")
-    private long numberSpun;
+    private int numberSpun;
 
 }
