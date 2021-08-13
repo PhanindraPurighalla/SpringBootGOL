@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Player {
-    private long playerId;
     private String playerName;
     private Career career;
     private long cash;
     private long bankLoan;
     private long numberSpun;
+    private int numPlayers;
 }

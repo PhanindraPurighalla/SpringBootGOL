@@ -24,7 +24,7 @@ create table career
  career_taxes_due           number          not null);
 
 create table player
-(player_id                  INT AUTO_INCREMENT  PRIMARY KEY,
+(player_id                  varchar2(100)   not null,
  player_name                varchar2(20)    not null,
  career_id                  number          null,
  cash                       number          null,
@@ -33,4 +33,4 @@ create table player
 
 create table game
 (game_id                    varchar2(100)   not null,
- player_id                  number          not null);
+ num_players                number          not null);

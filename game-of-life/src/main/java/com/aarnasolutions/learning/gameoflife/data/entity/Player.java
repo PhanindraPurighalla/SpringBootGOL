@@ -9,13 +9,13 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Embeddable
 @Table(name="PLAYER")
 public class Player {
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="PLAYER_ID")
-    private long playerId;
+    private long playerId;*/
 
     @Column(name="PLAYER_NAME")
     private String playerName;
