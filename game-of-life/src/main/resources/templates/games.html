@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game Of Life | Initiated Games</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>All initiated games</h1>
+<table>
+    <th:block th:each="game: ${games}">
+        <tr>
+            <th>Game Id</th>
+            <th>Number of Players</th>
+        </tr>
+        <td th:text="${game.gameId}">Game Id</td>
+        <td th:text="${game.numPlayers}">Number of Players</td>
+        <tr>
+            <th>Player Details</th>
+            <th>Player Name</th>
+            <th>Cell Position</th>
+        </tr>
+        <tr th:each="player: ${game.players}">
+            <td></td>
+            <td th:text="${player.playerName}"> Player [n] Name</td>
+            <td th:text="${player.cellPosition}"> Player [n] Cell Position</td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

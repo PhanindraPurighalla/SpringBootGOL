@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Game of Life | Welcome new</title>
+</head>
+
+<body>
+<main>
+    <!-- ***********************  NUMER OF PLAYERS  *********************** -->
+    <header>
+        <div class="content-wrap">
+            <h1>Game of Life</h1>
+            <form class="player_count" name="player_count" th:action="@{/game-of-life/init}" th:method="POST">
+                <label for="player_name">Player Name</label>
+                <input type="text" id="player_name" name="playerName" >
+                <h2>How many players are playing the game?</h2>
+                <ul>
+                    <li>
+                        <input type="radio" id="two_players" name="numPlayers" value="2">
+                        <label for="two_players">Two</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="three_players" name="numPlayers" value="3">
+                        <label for="three_players">Three</label><br>
+                    </li>
+                    <li>
+                        <input type="radio" id="four_players" name="numPlayers" value="4">
+                        <label for="four_players">Four</label><br>
+                    </li>
+                    <li>
+                        <input type="radio" id="five_players" name="numPlayers" value="5">
+                        <label for="five_players">Five</label><br>
+                    </li>
+                    <li>
+                        <input type="radio" id="six_players" name="numPlayers" value="6">
+                        <label for="six_players">Six</label><br>
+                    </li>
+                </ul>
+                <input class="btn" type="submit" value="PLAY">
+            </form>
+        </div>
+    </header>
+</main>
+</body>
+</html>
+
