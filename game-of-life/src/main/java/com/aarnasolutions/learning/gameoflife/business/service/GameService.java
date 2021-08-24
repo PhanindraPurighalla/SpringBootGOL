@@ -9,9 +9,11 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Log
@@ -41,7 +43,6 @@ public class GameService {
                         .gameId(UUID.randomUUID().toString())
                         .players(List.of(player))
                         .numPlayers(numPlayers)
-                        .isFull('N')
                         .build();
         gameRepository.save(game);
         return game;
@@ -49,6 +50,38 @@ public class GameService {
 
     public Iterable<Game> getGames() {
         return gameRepository.findAll();
+    }
+
+    public List<com.aarnasolutions.learning.gameoflife.business.domain.Game> getDomainGames() {
+        var repoGames = gameRepository.findAll();
+        var domainGames =
+                new ArrayList<com.aarnasolutions.learning.gameoflife.business.domain.Game>();
+        repoGames.forEach(
+                game -> {
+                    var domainGame =
+                            com.aarnasolutions.learning.gameoflife.business.domain.Game.builder()
+                                    .gameId(game.getGameId())
+                                    .numPlayers(game.getNumPlayers())
+                                    .players(
+                                            game.getPlayers().stream()
+                                                    .map(
+                                                            player ->
+                                                                    com.aarnasolutions.learning
+                                                                            .gameoflife.business
+                                                                            .domain.Player.builder()
+                                                                            .playerName(
+                                                                                    player
+                                                                                            .getPlayerName())
+                                                                            .cellPosition(
+                                                                                    player
+                                                                                            .getCellPosition())
+                                                                            .numberSpun(0)
+                                                                            .build())
+                                                    .collect(Collectors.toList()))
+                                    .build();
+                    domainGames.add(domainGame);
+                });
+        return domainGames;
     }
 
     public void joinGame(String gameId, String playerName) {
@@ -83,7 +116,9 @@ public class GameService {
                             .forEach(
                                     player1 ->
                                             player1.setCellPosition(
-                                                    playerTurnService.getNextCellId(player1.getCellPosition(), numberSpun)));
+                                                    playerTurnService.getNextCellId(
+                                                            player1.getCellPosition(),
+                                                            numberSpun)));
                     gameRepository.save(game1);
                 });
         return game;

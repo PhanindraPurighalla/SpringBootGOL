@@ -9,9 +9,6 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div th:if="${initiatedGame}">
-    <h1 th:utext="${initiatedGame.numPlayers} + ' player game has been initiated by ' + ${initiatingPlayer}"></h1>
-</div>
 <table>
     <th:block th:each="game: ${games}">
         <tr>
@@ -21,7 +18,7 @@
         </tr>
         <form class="joined_players" name="joined_players" th:action="@{/game-of-life/join}" th:method="POST">
             <td>
-                <div th:unless="${game.players.size() == game.numPlayers}"><input class="btn" type="submit" value="Join"></div>
+                <div th:if="${game.joinPermissible}"><input class="btn" type="submit" value="Join"></div>
             </td>
             <td th:text="${game.gameId}">Game Id</td>
             <input type="hidden" th:value="${game.gameId}" th:name="gameId">
@@ -33,11 +30,23 @@
             <th>Player Details</th>
             <th>Player Name</th>
             <th>Cell Position</th>
+            <th>Number Spun</th>
         </tr>
         <tr th:each="player: ${game.players}">
-            <td></td>
-            <td th:text="${player.playerName}"> Player [n] Name</td>
-            <td th:text="${player.cellPosition}"> Player [n] Cell Position</td>
+            <form class="move_player_pegs" name="move_player_pegs" th:object="${player}"
+                  th:action="@{/game-of-life/move-player}" th:method="POST">
+                <td>
+                    <div th:unless="${game.joinPermissible}"><input class="btn" type="submit" value="Move"></div>
+                </td>
+                <td th:text="${player.playerName}"> Player [n] Name</td>
+                <input type="hidden" th:value="${player.playerName}" th:name="playerName">
+                <input type="hidden" th:value="${game.gameId}" th:name="gameId">
+                <td th:text="${player.cellPosition}"> Player [n] Cell Position</td>
+                <input type="hidden" th:value="${player.cellPosition}" th:name="cellPosition">
+                <td>
+                    <input type="text" id="number_spun" name="numberSpun" th:field="*{numberSpun}"/>
+                </td>
+        </form>
         </tr>
     </th:block>
 </table>

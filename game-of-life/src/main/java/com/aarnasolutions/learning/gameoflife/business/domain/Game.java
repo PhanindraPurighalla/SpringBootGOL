@@ -15,4 +15,5 @@ public class Game {
     private String gameId;
     private List<Player> players;
     private int numPlayers;
+    private boolean joinPermissible;
 }

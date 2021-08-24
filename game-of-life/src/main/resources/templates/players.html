@@ -9,20 +9,17 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div th:if="${playersInGame}">
-    <h1 th:utext="${playersInGame.size()} + ' are playing this game'"></h1>
-</div>
 <table>
+    <tr>
+        <th>Player Name</th>
+        <th>Number Spun</th>
+        <th>Current Cell Position</th>
+    </tr>
     <th:block th:each="player: ${playersInGame}">
         <tr>
-            <th>Player Details</th>
-            <th>Player Name</th>
-            <th>Cell Position</th>
-        </tr>
-        <tr>
-            <td></td>
             <td th:text="${player.playerName}"> Player [n] Name</td>
-            <td th:text="${player.cellPosition}"> Player [n] Cell Position</td>
+            <td th:text="${player.numberSpun}"> Player [n] Number Spun</td>
+            <td th:text="${player.cellPosition}"> Player [n] Current Cell Position</td>
         </tr>
     </th:block>
 </table>

@@ -12,26 +12,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="GAME")
+@Table(name = "GAME")
 public class Game {
     @Id
-    @Column(name="GAME_ID")
+    @Column(name = "GAME_ID")
     private String gameId;
 
     /*@Column(name="PLAYER_ID")
     private long playerId;*/
 
-    @Column(name="NUM_PLAYERS")
+    @Column(name = "NUM_PLAYERS")
     private int numPlayers;
 
     @ElementCollection
-    @CollectionTable(
-            name="PLAYER",
-            joinColumns=@JoinColumn(name="PLAYER_ID")
-    )
+    @CollectionTable(name = "PLAYER", joinColumns = @JoinColumn(name = "PLAYER_ID"))
     private List<Player> players = new ArrayList<>();
-
-    @Column(name="IS_FULL")
-    private char isFull;
-
 }

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game Of Life | Available cells</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>All available cells</h1>
+<table>
+    <tr>
+        <th>Cell Id</th>
+        <th>Cell Action Id</th>
+        <th>Next Cell Id</th>
+        <th>Alt Next Cell Id</th>
+    </tr>
+    <tr th:each="cell: ${cells}">
+        <td th:text="${cell.cellId}">Cell Id</td>
+        <td th:text="${cell.cellActionId}">Cell Action Id</td>
+        <td th:text="${cell.nextCellId}">Next Cell Id</td>
+        <td th:text="${cell.altNextCellId}">Alt Next Cell Id</td>
+    </tr>
+</table>
+</body>
+</html>

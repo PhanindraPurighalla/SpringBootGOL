@@ -1,8 +1,10 @@
 package com.aarnasolutions.learning.gameoflife.web;
 
 import com.aarnasolutions.learning.gameoflife.business.service.ActionService;
+import com.aarnasolutions.learning.gameoflife.business.service.CellService;
 import com.aarnasolutions.learning.gameoflife.business.service.GameService;
 import com.aarnasolutions.learning.gameoflife.data.entity.Action;
+import com.aarnasolutions.learning.gameoflife.data.entity.Cell;
 import com.aarnasolutions.learning.gameoflife.data.entity.Game;
 import com.aarnasolutions.learning.gameoflife.data.entity.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,14 @@ public class GameOfLifeWebController {
 
     private final ActionService actionService;
     private final GameService gameService;
+    private final CellService cellService;
 
     @Autowired
-    public GameOfLifeWebController(ActionService actionService, GameService gameService) {
+    public GameOfLifeWebController(
+            ActionService actionService, GameService gameService, CellService cellService) {
         this.actionService = actionService;
         this.gameService = gameService;
+        this.cellService = cellService;
     }
 
     @GetMapping("/actions")
@@ -28,6 +33,13 @@ public class GameOfLifeWebController {
         Iterable<Action> actions = this.actionService.getActions();
         model.addAttribute("actions", actions);
         return "actions";
+    }
+
+    @GetMapping("/cells")
+    public String getCells(Model model) {
+        Iterable<Cell> cells = this.cellService.getCells();
+        model.addAttribute("cells", cells);
+        return "cells";
     }
 
     @GetMapping("/home")
@@ -38,15 +50,26 @@ public class GameOfLifeWebController {
 
     @GetMapping("/games")
     public String getGames(Model model) {
-        Iterable<Game> games = this.gameService.getGames();
-        model.addAttribute("games", games);
+        var domainGames = this.gameService.getDomainGames();
+        model.addAttribute("games", domainGames);
         return "games";
     }
 
     @GetMapping("/join-game")
     public String getGamesToJoin(Model model, @ModelAttribute("player") Player player) {
-        Iterable<Game> games = this.gameService.getGames();
-        model.addAttribute("games", games);
+        var domainGames = this.gameService.getDomainGames();
+        domainGames.forEach(
+                game ->
+                        game.setJoinPermissible(
+                                game.getPlayers().size() < game.getNumPlayers()
+                                        && game.getPlayers().stream()
+                                                .noneMatch(
+                                                        player1 ->
+                                                                player.getPlayerName()
+                                                                        .equals(
+                                                                                player1
+                                                                                        .getPlayerName()))));
+        model.addAttribute("games", domainGames);
         model.addAttribute("joiningPlayer", player.getPlayerName());
         return "games";
     }
@@ -55,18 +78,56 @@ public class GameOfLifeWebController {
     public String initGame(
             @RequestParam String playerName, @RequestParam int numPlayers, Model model) {
         var initiatedGame = gameService.initGame(playerName, numPlayers);
+        var domainGames = this.gameService.getDomainGames();
+        domainGames.forEach(
+                game ->
+                        game.setJoinPermissible(
+                                game.getPlayers().size() < game.getNumPlayers()
+                                        && game.getPlayers().stream()
+                                                .noneMatch(
+                                                        player ->
+                                                                playerName.equals(
+                                                                        player.getPlayerName()))));
+        model.addAttribute("games", domainGames);
         model.addAttribute("initiatingPlayer", playerName);
         model.addAttribute("initiatedGame", initiatedGame);
         model.addAttribute("playerName", playerName);
         model.addAttribute("joiningPlayer", playerName);
+        model.addAttribute("player", new Player());
+
         return "games";
     }
 
     @PostMapping("/join")
-    public String joinGame(@RequestParam("gameId") String gameId, @RequestParam("playerName") String playerName, Model model) {
+    public String joinGame(
+            @RequestParam("gameId") String gameId,
+            @RequestParam("playerName") String playerName,
+            Model model) {
         gameService.joinGame(gameId, playerName);
         var playersInGame = gameService.getPlayersByGameId(gameId);
         model.addAttribute("playersInGame", playersInGame);
         return "players";
+    }
+
+    @PostMapping("/move-player")
+    public String movePlayer(
+            @RequestParam String gameId,
+            @RequestParam int numberSpun,
+            @RequestParam String playerName,
+            Model model) {
+        gameService.movePlayerPeg(gameId, playerName, numberSpun).orElse(null);
+        var domainGames = this.gameService.getDomainGames();
+        domainGames.forEach(
+                game ->
+                        game.setJoinPermissible(
+                                game.getPlayers().size() < game.getNumPlayers()
+                                        && game.getPlayers().stream()
+                                                .noneMatch(
+                                                        player ->
+                                                                playerName.equals(
+                                                                        player.getPlayerName()))));
+        model.addAttribute("games", domainGames);
+        model.addAttribute("player", new Player());
+        return "games";
     }
 }
