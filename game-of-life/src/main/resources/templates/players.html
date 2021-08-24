@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game Of Life | Players</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:if="${playersInGame}">
+    <h1 th:utext="${playersInGame.size()} + ' are playing this game'"></h1>
+</div>
+<table>
+    <th:block th:each="player: ${playersInGame}">
+        <tr>
+            <th>Player Details</th>
+            <th>Player Name</th>
+            <th>Cell Position</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td th:text="${player.playerName}"> Player [n] Name</td>
+            <td th:text="${player.cellPosition}"> Player [n] Cell Position</td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

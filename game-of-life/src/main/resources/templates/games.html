@@ -9,15 +9,26 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>All initiated games</h1>
+<div th:if="${initiatedGame}">
+    <h1 th:utext="${initiatedGame.numPlayers} + ' player game has been initiated by ' + ${initiatingPlayer}"></h1>
+</div>
 <table>
     <th:block th:each="game: ${games}">
         <tr>
+            <th>Actions</th>
             <th>Game Id</th>
             <th>Number of Players</th>
         </tr>
-        <td th:text="${game.gameId}">Game Id</td>
-        <td th:text="${game.numPlayers}">Number of Players</td>
+        <form class="joined_players" name="joined_players" th:action="@{/game-of-life/join}" th:method="POST">
+            <td>
+                <div th:unless="${game.players.size() == game.numPlayers}"><input class="btn" type="submit" value="Join"></div>
+            </td>
+            <td th:text="${game.gameId}">Game Id</td>
+            <input type="hidden" th:value="${game.gameId}" th:name="gameId">
+            <td th:text="${game.numPlayers}">Number of Players</td>
+            <input type="hidden" th:value="${game.numPlayers}" th:name="numPlayers">
+            <input type="hidden" th:value="${joiningPlayer}" th:name="playerName">
+        </form>
         <tr>
             <th>Player Details</th>
             <th>Player Name</th>

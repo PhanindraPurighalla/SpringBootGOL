@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <title>Game of Life | Welcome new</title>
 </head>
@@ -17,9 +18,9 @@
     <header>
         <div class="content-wrap">
             <h1>Game of Life</h1>
-            <form class="player_count" name="player_count" th:action="@{/game-of-life/init}" th:method="POST">
+            <form class="player_count" name="player_count" th:object="${player}">
                 <label for="player_name">Player Name</label>
-                <input type="text" id="player_name" name="playerName" >
+                <input type="text" id="player_name" name="playerName" th:field="*{playerName}">
                 <h2>How many players are playing the game?</h2>
                 <ul>
                     <li>
@@ -43,7 +44,10 @@
                         <label for="six_players">Six</label><br>
                     </li>
                 </ul>
-                <input class="btn" type="submit" value="PLAY">
+                <input class="btn" type="submit" formmethod="POST" th:formaction="@{/game-of-life/create}" value="PLAY">
+                <input class="btn" type="submit" th:method="GET" th:formaction="@{/game-of-life/join-game}"
+                       value="VIEW GAMES">
+                <!--<a class="btn" th:href="@{/game-of-life/join-game}"> View Games</a>-->
             </form>
         </div>
     </header>

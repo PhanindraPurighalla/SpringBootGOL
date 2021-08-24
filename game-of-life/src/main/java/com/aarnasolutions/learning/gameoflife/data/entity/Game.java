@@ -31,4 +31,7 @@ public class Game {
     )
     private List<Player> players = new ArrayList<>();
 
+    @Column(name="IS_FULL")
+    private char isFull;
+
 }
